@@ -71,24 +71,13 @@ public function changeStatusBill1($bill_id){
     return $rows;
 }
 
-public function changeStatusBill2($bill_id){
+public function changeStatusBill2($bill_id,$table){
     $sql = "UPDATE `bill` SET `b_status` = 'เก็บเงินแล้ว' WHERE `bill`.`b_id` = '".$bill_id."';";
     $query = $this->db->query($sql);
-    $rows = $this->db->affected_rows($query);
 
-    $rs = "";
-    if($rows > 0){
-        try {
-             $rs = 1;  
-         } catch (Exception $e) {
-             $rs = 0; //ดักจับ error โดยใช้ try catch
-         }
-    }else{
-        $rs= 0;
-    }
     $sql1 = "UPDATE `tableland` SET `t_status` = 'ready' WHERE `tableland`.`t_id` = '".$table."';";
     $this->db->query($sql1);
-    return $rows;
+   
 }
 
 public function getBillStatusMakepayment(){
@@ -116,6 +105,22 @@ public function changeStatusQuestion($bill){
     }
 
     return $rs;
+}
+
+public function getBillIDLast($table){
+    $sql = "SELECT b_id FROM bill where b_table = '".$table."' and b_status = 'ดำเนินการ'";
+    $result = $this->db->query($sql);
+
+    return $result->result();
+}
+
+public function getBillDayChart($date){
+    $sql = "SELECT RIGHT(b_date,8) as time , b_amount_people*b_price as price 
+            FROM bill
+            where b_date LIKE '2020-07-30%'";
+    $result = $this->db->query($sql);
+
+    return $result->result();
 }
 
 

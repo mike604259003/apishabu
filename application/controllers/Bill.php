@@ -71,7 +71,8 @@ class Bill extends CI_Controller{
    public function changeStatusBill2(){
     $requestData = json_decode(file_get_contents('php://input'), true);
     $bill_id = $requestData['bill_id'];
-    $rs = $this->bill->changeStatusBill2($bill_id);
+    $table = $requestData['table_id'];
+    $rs = $this->bill->changeStatusBill2($bill_id,$table);
     echo json_encode($rs);
 }
 
@@ -92,6 +93,19 @@ class Bill extends CI_Controller{
     $requestData = json_decode(file_get_contents('php://input'), true);
     $bill = $requestData['bill'];
     $rs = $this->bill->changeStatusQuestion($bill);
+    echo json_encode($rs);
+   }
+
+   public function getBillIDLast(){
+
+    $requestData = json_decode(file_get_contents('php://input'), true);
+    $rs = $this->bill->getBillIDLast($requestData['table']);
+    echo json_encode($rs);
+   }
+
+   public function getBillDayChart(){
+    $requestData = json_decode(file_get_contents('php://input'), true);
+    $rs = $this->bill->getBillDayChart($requestData['date']);
     echo json_encode($rs);
    }
     

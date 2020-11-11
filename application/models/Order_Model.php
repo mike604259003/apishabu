@@ -188,6 +188,24 @@ public function checkOrderBeforeCheckBill($table_id){
 
 }
 
+public function confirmorderall($order_id){
+    $sql="UPDATE order_detail SET od_status ='เสร็จสิ้น' WHERE od_id = '".$order_id."'"; 
+    $result = $this->db->query($sql);
+    return $result->result();
+}
+
+public function getDataChartOrder($date){
+    $sql = "SELECT sum(od_amount) as total , f_name
+            FROM order_detail , food , order_list
+            WHERE food.f_id = order_detail.od_f_id and order_list.o_id = order_detail.od_id and order_list.o_time LIKE '%$date%'
+            GROUP BY od_f_id";
+    $result = $this->db->query($sql);
+    return $result->result();
+}
+
+
+
+
 
 
 } 

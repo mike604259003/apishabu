@@ -201,5 +201,17 @@ class Order extends CI_Controller{
         $rs = $this->order->checkOrderBeforeCheckBill($requestData['table_id']);
         echo json_encode($rs);
     }
+
+    public function confirmorderall(){
+        $requestData = json_decode(file_get_contents('php://input'), true);
+        $rs = $this->order->confirmorderall($requestData['order_id']);
+        echo json_encode($rs);
+    }
+
+    public function getDataChartOrder(){
+        $requestData = json_decode(file_get_contents('php://input'), true);
+        $rs = $this->order->getDataChartOrder($requestData['date']);
+        echo json_encode($rs);
+    }
 }
 ?>
